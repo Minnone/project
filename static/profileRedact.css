@@ -141,21 +141,156 @@ section {
 }
 
 .main-form1 {
-    flex: 2; /* Занимает 2/3 ширины родительского контейнера */
-    max-width: 50%; /* Задаем максимальную ширину для более контролируемого поведения */
-    height: 600px;
-    background-color: #f9f9f9; /* Задаем цвет фона для визуального разделения */
-    padding: 20px; /* Паддинг для внутреннего контента */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Добавляем тень для глубины */
-    border-radius: 55px; /* Закругляем углы */
-    margin-right: 10px; /* Правый отступ для дистанции между формами */
+    flex: 2;
+    max-width: 50%;
+    height: auto;
+    min-height: 600px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 55px;
+    margin-right: 10px;
+    backdrop-filter: blur(10px);
 }
 
-.form{
-    padding-left: 20px;
+.form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-photo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-img-user {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.photo-upload-label {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 15px;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+}
+
+.photo-upload-label:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.form-fields {
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-field {
+    flex: 1;
+    min-width: 250px;
+}
+
+.text {
+    color: white;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.input {
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+textarea.input {
+    min-height: 100px;
+    resize: vertical;
+    max-height: 200px;
+}
+
+select.input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.main-button-save {
+    background: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.main-button-save:hover {
+    background: #45a049;
+}
+
+.button-cancel {
+    background: #f44336;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.button-cancel:hover {
+    background: #da190b;
 }
 
 .form-login{
@@ -236,11 +371,6 @@ section {
     width: 120px;
 }
 
-.text{
-    font-size: 24px;
-    color: #ffffff;
-}
-
 .form-fio{
     display: flex;
     align-items: center;
@@ -271,17 +401,6 @@ section {
     border: none; /* Убираем стандартную рамку, если необходимо */
     color: #ffffff; /* Цвет текста, можно изменить на нужный вам */
     padding-left: 20px;
-}
-
-.input {
-    font-size: 20px; /* Размер шрифта */
-    background-color: #0000004D; /* Цвет фона */
-    border-radius: 25px; /* Закругление углов */
-    padding: 10px; /* Отступ внутри элемента */
-    border: none; /* Убираем стандартную рамку для input */
-    color: #ffffff; /* Цвет текста */
-    width: 100%; /* Устанавливаем ширину в 100% контейнера, если нужно */
-    box-sizing: border-box; /* Учитываем padding и border в ширине */
 }
 
 .input-steks {
@@ -545,6 +664,14 @@ label {
 
     .nav{
         gap: 10px;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-field {
+        min-width: 100%;
     }
 }
 

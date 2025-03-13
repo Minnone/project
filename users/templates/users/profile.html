@@ -36,10 +36,14 @@
                     <form class="form">
                         <div class="form-img-name">
                             <div class="form-fio">
-                                <img class="form-img-user" src="/static/Ellipse 1.svg" alt="">
+                                {% if user.profile_photo %}
+                                    <img class="form-img-user" src="{{ user.profile_photo.url }}" alt="Profile Photo">
+                                {% else %}
+                                    <img class="form-img-user" src="/static/Ellipse 1.svg" alt="">
+                                {% endif %}
                                 <div class="form-nickname">
-                                    <p class="fio">Иван Иванов Иванович</p>
-                                    <p class="nickname">lilvodnik</p>
+                                    <p class="fio">{{ user.first_name }} {{ user.last_name }}</p>
+                                    <p class="nickname">{{ user.username }}</p>
                                 </div>
                             </div>
                         </div>
@@ -47,25 +51,22 @@
                             <a href="{% url 'users:editprofile' %}" class="change-button ">Изменить профиль</a>
                         </div>
                         <div class="form-age">
-                            <p class="text">Возраст: 18 лет</p>
+                            <p class="text">Дата рождения: {{ user.date_of_birth|date:"d.m.Y" }}</p>
                         </div>
                         <div class="form-gender">
-                            <p class="text">Пол: муж</p>
-
+                            <p class="text">Пол: {{ user.get_gender_display }}</p>
                         </div>
                         <div class="form-mail">
-                            <p class="text">Адрес электронной почты:</p>
-                            <p class="text">ivanov.i.i@edu.mirea.ru</p>
+                            <p class="text">Email: {{ user.email }}</p>
                         </div>
                         <div class="form-phone">
-                            <p class="text">Номер телефона: +7 000 000 00 00</p>
+                            <p class="text">Телефон: {{ user.phone_number }}</p>
                         </div>
                         <div class="form-steks">
-                            <p class="text">Стек технологий</p>
-                            <p class="text">python, c++, c#, c, java, javascript</p>
+                            <p class="text">Стек технологий:</p>
+                            <p class="text">{{ user.technology_stack }}</p>
                         </div>
                     </form>
-
                 </div>
                 <div class="main-form-container">
                     <div class="main-form2">
@@ -96,7 +97,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div id="notificationModal" class="modal">
                 <div class="modal-content">
