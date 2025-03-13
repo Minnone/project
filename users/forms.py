@@ -18,28 +18,34 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserRegistrationForm(UserCreationForm):
-    email = forms.CharField(widget=forms.EmailInput(attrs={
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
         'class': 'input',
         'placeholder': 'Введите эл.почту'
     }))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'input',
         'placeholder': 'Введите пароль'
-
     }))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'input',
         'placeholder': 'Подтвердите пароль'
-
     }))
+
     class Meta:
         model = User
         fields = ('email', 'password1', 'password2')
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('Пользователь с такой почтой уже существует')
+        return email
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password1'])  # Устанавливаем хешированный пароль
+        user.username = self.cleaned_data['email']  # Используем email как username
+        user.email = self.cleaned_data['email']
+        user.set_password(self.cleaned_data['password1'])
         if commit:
             user.save()
         return user

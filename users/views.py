@@ -26,11 +26,19 @@ def registration(request):
         if form.is_valid():
             try:
                 user = form.save()
-                login(request, user) # Автоматический логин после регистрации.  Можно убрать, если нужно.
-                return redirect('your_redirect_url') # Замените на нужный URL
+                authenticated_user = auth.authenticate(
+                    username=user.email,
+                    password=form.cleaned_data['password1']
+                )
+                if authenticated_user:
+                    auth.login(request, authenticated_user)
+                    return HttpResponseRedirect(reverse('xaki'))
+                else:
+                    return render(request, 'users/registration.html',
+                        {'form': form, 'error': 'Ошибка при входе в аккаунт'})
             except IntegrityError:
-                      return render(request, 'users/registration.html',
-                      {'form': form, 'error': 'Пользователь с таким именем уже существует'})
+                return render(request, 'users/registration.html',
+                    {'form': form, 'error': 'Пользователь с такой почтой уже существует'})
     else:
         form = UserRegistrationForm()
     return render(request, 'users/registration.html', {'form': form})
