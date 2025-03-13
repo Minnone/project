@@ -1,0 +1,197 @@
+{% load static %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{% static 'profileRedact.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="nav-items">
+            <img src="/static/LOGO.svg" alt="" class="logo">
+            <a href="#" class="nav-link-project1">О проекте</a>
+        </div>
+        <button class="menu-toggle">Меню</button>
+        <nav class="desktop-nav">
+            <ul class="nav">
+                <li class="nav-item"><a href="{% url 'xakaton:xaki' %}" class="nav-link">Главная</a></li>
+                <li class="nav-item"><a href="{% url 'xakaton:aboutmirea' %}" class="nav-link">О миреа</a></li>
+                <li class="nav-item"><a href="{% url 'xakaton:registcommand' %}" class="nav-link">Команды</a></li>
+                <li class="nav-item"><a href="{% url 'xakaton:aboutproject' %}" class="nav-link-project2">О проекте</a></li>
+                <li class="nav-item-link"><a href="{% url 'users:profile' %}" class="nav-link"><img src="/static/Group 89.svg" alt="" class="nav-profile-img"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <section>
+        <div class="main">
+            <div class="main-save">
+                <button class="main-button-save">Сохранить изменения</button>
+            </div>
+            <div class="main-profile">
+                <div class="main-form1">
+                    <form class="form">
+                        <div class="form-img-name">
+                            <div class="form-fio">
+                                <img class="form-img-user" src="/static/Ellipse 1.svg" alt="">
+                                <div class="form-nickname">
+                                    <p class="fio">Иван Иванов Иванович</p>
+                                    <div class="form-login">
+                                        <p class="nickname">lilvodnik</p>
+                                        <a href="{% url 'users:changelogin' %}" class="button-change-login" target="_blank">Изменить логин</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-change-button">
+                            <button class="change-button">Изменить фото</button>
+                        </div>
+                        <div class="form-age">
+                            <p class="text">Дата рождения:</p>
+                            <label for="date"><input class="input-data" type="date" id="date" required></label>
+                        </div>
+                        <div class="form-gender">
+                            <p class="text">Пол:</p>
+                            <div class="gender-selection">
+                              <div id="male" class="gender-option" onclick="selectGender('male')">Муж</div>
+                              <div id="female" class="gender-option" onclick="selectGender('female')">Жен</div>
+                            </div>
+                          </div>
+                        <div class="form-mail">
+                            <p class="text">Адрес электронной почты:</p>
+                            <a href="{% url 'users:addmail' %}" class="button-add-mail" target="_blank">Добавить</a>
+                        </div>
+                        <div class="form-phone">
+                            <p class="text">Номер телефона:</p>
+                            <label for="phone"><input class="input" type="tel" id="phone-input" placeholder="Введите номер телефона" required></label>
+                        </div>
+                        <div class="form-steks">
+                            <p class="text">Стек технологий</p>
+                            <label for="steks">
+                                <div class="custom-select">
+                                    <div class="select-selected">Выбрать</div>
+                                    <ul class="select-items">
+                                      <li value="stek1"><input type="checkbox"> C++</li>
+                                      <li value="stek2"><input type="checkbox"> C#</li>
+                                      <li value="stek3"><input type="checkbox"> C</li>
+                                      <li value="stek4"><input type="checkbox"> Java</li>
+                                      <li value="stek5"><input type="checkbox"> Dart</li>
+                                      <li value="stek6"><input type="checkbox"> JavaScript</li>
+                                    </ul>
+                                  </div>
+                              </label>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="main-form-container">
+                    <div class="main-form2">
+                        <form class="form2">
+                            <h2 class="form2-info">Информация</h2>
+                            <div class="form2-group">
+                                <p class="text">Группа 0000-00-00</p>
+                            </div>
+                            <div class="form2-course">
+                                <p class="text">Курс</p>
+                            </div>
+                            <div class="form2-student-number">
+                                <p class="text">Личный номер студента</p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="main-form3">
+                        <h2 class="form3-active">Активность пользователя</h2>
+                        <div class="form3-links">
+                            <div class="back-change">
+                                <a href="#" class="form3-paricitipate">Участие в хакатонах</a>
+                            </div>
+
+                            <a href="#" class="form3-nexthack">Предстоящий хакатон</a>
+                            <div class="back-change">
+                                <a href="#" class="form3-lasthack">Последний хакатон</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('.desktop-nav');
+
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const phoneInput = document.getElementById('phone-input');
+
+            phoneInput.addEventListener('input', function (e) {
+                let value = e.target.value
+                    .replace(/\D/g, ''); // Очищаем все нецифровые символы
+
+                // Ограничиваем ввод 11 цифрами
+                if (value.length > 11) {
+                    value = value.slice(0, 11);
+                }
+
+                // Форматируем номер по маске +7 000 000 00 00
+                const formattedValue = value.replace(/(\d{1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/, (match, p1, p2, p3, p4, p5) => {
+                    let result = '+7';
+                    if (p2) result += ' ' + p2;
+                    if (p3) result += ' ' + p3;
+                    if (p4) result += ' ' + p4;
+                    if (p5) result += ' ' + p5;
+                    return result.trim();
+                });
+
+                // Обновляем значение input
+                e.target.value = formattedValue;
+            });
+        });
+
+
+        const select = document.querySelector('.select-selected');
+        const items = document.querySelectorAll('.select-items li');
+        const selectItems = document.querySelector('.select-items');
+
+        // Initially hide the select-items
+        selectItems.classList.add('select-hide');
+
+        select.addEventListener('click', () => {
+            selectItems.classList.toggle('select-hide');
+        });
+
+        items.forEach(item => {
+            item.addEventListener('click', (event) => {
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
+
+                // Update the text in select-selected
+                const selectedValues = Array.from(items).filter(item => item.querySelector('input[type="checkbox"]').checked)
+                    .map(item => item.textContent.trim()).join(', ');
+
+                select.innerText = selectedValues.length > 0 ? selectedValues : 'Выбрать';
+            });
+        });
+
+        function selectGender(gender) {
+        const options = document.querySelectorAll('.gender-option');
+
+        options.forEach(option => {
+            option.classList.remove('selected'); // Убираем выделение у всех
+        });
+
+        const selectedOption = document.getElementById(gender);
+        selectedOption.classList.add('selected'); // Добавляем выделение к выбранному элементу
+        }
+    </script>
+
+</body>
+</html>
